@@ -1,0 +1,32 @@
+name: mi primer pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  verificacion:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. descargar codigo
+        uses: actions/checkout@v4
+
+      - name: 2. instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 3. instalar dependencias del proyecto
+        run: npm install
+
+      - name: 4. ejecutar prueba
+        run: npm test
+
+      - name: 5. almacenamiento seguro
+        uses: actions/upload-artifact@v4
+        with:
+          name: aplicacion-empaquetada
+          path: |
+            sistema.js
+            package.json
